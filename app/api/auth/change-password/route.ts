@@ -1,7 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server"
 
-const DIRECTUS_BASE_URL = process.env.DIRECTUS_BASE_URL
-const DIRECTUS_TOKEN = process.env.DIRECTUS_TOKEN
+const DIRECTUS_BASE_URL = process.env.NEXT_PUBLIC_DIRECTUS_BASE_URL
+const DIRECTUS_TOKEN = process.env.NEXT_PUBLIC_DIRECTUS_TOKEN
 
 export async function POST(request: NextRequest) {
   try {
