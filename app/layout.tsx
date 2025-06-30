@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   icons: {
     icon: "/favicon.svg",
   },
-    generator: 'v0.dev'
+  generator: 'Homio CRM'
 }
 
 export default function RootLayout({
