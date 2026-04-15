@@ -32,15 +32,15 @@ export async function GET(request: NextRequest) {
     const payments = paymentsData.data || []
 
     const totalClients = clients.length
-    const totalRevenue = clients.reduce((sum: number, client: any) => sum + (client.totalAmountReceived || 0), 0)
+    const totalRevenue = clients.reduce((sum: number, client: any) => sum + (Number(client.totalAmountReceived) || 0), 0)
 
     // Calcular comissões totais baseadas no commissionPercentage de cada cliente
     const totalCommissions = clients.reduce((sum: number, client: any) => {
       const commissionRate = client.commissionPercentage ? client.commissionPercentage / 100 : 0.2
-      return sum + (client.totalAmountReceived || 0) * commissionRate
+      return sum + (Number(client.totalAmountReceived) || 0) * commissionRate
     }, 0)
 
-    const totalPaid = payments.reduce((sum: number, payment: any) => sum + (payment.amount || 0), 0)
+    const totalPaid = payments.reduce((sum: number, payment: any) => sum + (Number(payment.amount) || 0), 0)
     const pendingPayments = Math.max(0, totalCommissions - totalPaid)
 
     return NextResponse.json({

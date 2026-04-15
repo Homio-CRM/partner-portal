@@ -35,19 +35,19 @@ export async function GET(request: NextRequest) {
     const balances = partners.map((partner: any) => {
       const partnerClients = clients.filter((client: any) => client.partnerHpn === partner.name)
       const totalRevenue = partnerClients.reduce(
-        (sum: number, client: any) => sum + (client.totalAmountReceived || 0),
+        (sum: number, client: any) => sum + (Number(client.totalAmountReceived) || 0),
         0,
       )
 
       // Calcular comissão baseada no commissionPercentage de cada cliente
       const totalCommission = partnerClients.reduce((sum: number, client: any) => {
         const commissionRate = client.commissionPercentage ? client.commissionPercentage / 100 : 0.2
-        return sum + (client.totalAmountReceived || 0) * commissionRate
+        return sum + (Number(client.totalAmountReceived) || 0) * commissionRate
       }, 0)
 
       // Calcular total pago para este parceiro
       const partnerPayments = payments.filter((payment: any) => payment.partnerHpn === partner.name)
-      const totalPaid = partnerPayments.reduce((sum: number, payment: any) => sum + (payment.amount || 0), 0)
+      const totalPaid = partnerPayments.reduce((sum: number, payment: any) => sum + (Number(payment.amount) || 0), 0)
 
       const pendingAmount = Math.max(0, totalCommission - totalPaid)
 
